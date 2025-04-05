@@ -1,7 +1,7 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as firebase from 'firebase';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { Auth } from 'aws-amplify';
 
 // Create auth context
@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
+  const auth = getAuth();
+
   // Check for existing authentication on mount
   useEffect(() => {
     const checkAuth = async () => {
@@ -24,8 +26,8 @@ export const AuthProvider = ({ children }) => {
         const authMethod = await AsyncStorage.getItem('authMethod');
         
         if (authMethod === 'firebase') {
-          // Check Firebase auth
-          firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+          // Check Firebase auth - using modern Firebase API
+          const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) {
               // Get additional user data if needed
               const userData = {
@@ -40,7 +42,15 @@ export const AuthProvider = ({ children }) => {
             }
             setIsLoading(false);
           });
-        } else if (authMethod === 'cognito') {
+
+           // Clean up subscription
+           return () => unsubscribe();
+          } else if (authMethod === 'cognito') {
+
+            
+
+
+       
           // Check Cognito auth
           try {
             const cognitoUser = await Auth.currentAuthenticatedUser();

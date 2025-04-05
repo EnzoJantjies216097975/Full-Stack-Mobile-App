@@ -1,13 +1,25 @@
 // src/services/aws.js
-import { Auth } from 'aws-amplify';
-import { Storage } from 'aws-amplify';
+import { Amplify, Auth, Storage } from 'aws-amplify';
 import { API } from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Configure Amplify
 export const configureAmplify = () => {
-  // This should be done in App.js before using any Amplify services
-  // For this example, we're assuming it's already configured
+  const config = {
+    Auth: {
+      region: process.env.EXPO_PUBLIC_AWS_REGION || 'us-east-1',
+      userPoolId: process.env.EXPO_PUBLIC_AWS_USER_POOL_ID || 'YOUR_USER_POOL_ID',
+      userPoolWebClientId: process.env.EXPO_PUBLIC_AWS_USER_POOL_CLIENT_ID || 'YOUR_CLIENT_ID',
+      identityPoolId: process.env.EXPO_PUBLIC_AWS_IDENTITY_POOL_ID || 'YOUR_IDENTITY_POOL_ID',
+    },
+    Storage: {
+      AWSS3: {
+        bucket: process.env.EXPO_PUBLIC_AWS_S3_BUCKET || 'YOUR_BUCKET_NAME',
+        region: process.env.EXPO_PUBLIC_AWS_REGION || 'us-east-1',
+      },
+    },
+  };
+  Amplify.configure(config);
 };
 
 // AWS Cognito Authentication
@@ -15,7 +27,8 @@ export const awsAuthService = {
   // Sign up a new user
   signUp: async (email, password, attributes) => {
     try {
-      const result = await Auth.signUp({
+      //const result = await Auth.signUp({
+        return await Auth.signUp({
         username: email,
         password,
         attributes: {
@@ -23,7 +36,7 @@ export const awsAuthService = {
           ...attributes,
         },
       });
-      return result;
+      //return result;
     } catch (error) {
       console.error('Error signing up:', error);
       throw error;

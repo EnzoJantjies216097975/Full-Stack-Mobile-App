@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Users, Activity, Calendar, DumbBell } from 'lucide-react';
+import { Home, Users, Activity, Calendar, DumbBell, Logout } from 'lucide-react';
 import useAuth from '../hooks/useAuth';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const location = useLocation();
-  const { logout, user } = useAuth();
+  const { user, logout } = useAuth();
 
   const navItems = [
     { path: '/', icon: Home, label: 'Dashboard' },
-    { path: '/exercises', icon: DumbBell, label: 'Exercises' },
+    { path: '/exercises', icon: Dumbbell, label: 'Exercises' },
     { path: '/programs', icon: Activity, label: 'Programs' },
     { path: '/classes', icon: Calendar, label: 'Classes' },
     { path: '/trainees', icon: Users, label: 'Trainees' }
@@ -43,20 +43,21 @@ const Layout = ({ children }) => {
             <div className="flex items-center mb-4">
               <div className="mr-3">
                 <img
-                  src={user?.avatar || '/api/placeholder/32/32'}
+                  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'User'}`}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
               </div>
               <div>
-                <p className="font-medium">{user?.name}</p>
+                <p className="font-medium">{user?.name || 'Trainer'}</p>
                 <p className="text-sm text-gray-500">Trainer</p>
               </div>
             </div>
             <button
               onClick={logout}
-              className="w-full px-4 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50"
+              className="flex items-center w-full px-4 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50"
             >
+              <LogOut className="w-4 h-4 mr-2" />
               Logout
             </button>
           </div>
@@ -65,8 +66,12 @@ const Layout = ({ children }) => {
 
       {/* Main content */}
       <div className="flex-1 overflow-auto">
-        <div className="p-8">{children}</div>
+        <div className="p-8">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
 };
+
+export default Layout;

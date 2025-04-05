@@ -58,6 +58,7 @@ export const firebaseAuth = {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;
     } catch (error) {
+      console.error("Login error:", error);
       throw error;
     }
   },
@@ -76,6 +77,7 @@ export const firebaseAuth = {
       
       return user;
     } catch (error) {
+      console.error("Register error:", error);
       throw error;
     }
   },
@@ -92,6 +94,7 @@ export const firebaseAuth = {
     try {
       await signOut(auth);
     } catch (error) {
+      console.error("Logout error:", error);
       throw error;
     }
   },
@@ -130,12 +133,14 @@ export const firestoreService = {
   // Exercises
   createExercise: async (exerciseData, trainerId) => {
     try {
-      return await addDoc(collection(db, 'exercises'), {
+      const docRef = await addDoc(collection(db, 'exercises'), {
         ...exerciseData,
         trainerId,
         createdAt: serverTimestamp()
       });
+      return { id: docRef.id, ...exerciseData };
     } catch (error) {
+      console.error("Error creating exercise:", error);
       throw error;
     }
   },
@@ -156,6 +161,7 @@ export const firestoreService = {
       const snapshot = await getDocs(exercisesQuery);
       return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
+      console.error("Error getting exercises:", error);
       throw error;
     }
   },
@@ -163,12 +169,14 @@ export const firestoreService = {
   // Workout Programs
   createProgram: async (programData, trainerId) => {
     try {
-      return await addDoc(collection(db, 'programs'), {
+      const docRef = await addDoc(collection(db, 'programs'), {
         ...programData,
         trainerId,
         createdAt: serverTimestamp()
       });
+      return { id: docRef.id, ...programData };
     } catch (error) {
+      console.error("Error creating program:", error);
       throw error;
     }
   },
@@ -189,6 +197,7 @@ export const firestoreService = {
       const snapshot = await getDocs(programsQuery);
       return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
+      console.error("Error getting programs:", error);
       throw error;
     }
   },
@@ -196,13 +205,15 @@ export const firestoreService = {
   // Classes
   createClass: async (classData, trainerId) => {
     try {
-      return await addDoc(collection(db, 'classes'), {
+      const docRef = await addDoc(collection(db, 'classes'),{
         ...classData,
         trainerId,
         participants: [],
         createdAt: serverTimestamp()
       });
+      return { id: docRef.id, ...classData };
     } catch (error) {
+      console.error("Error creating class:", error);
       throw error;
     }
   },
@@ -227,6 +238,7 @@ export const firestoreService = {
       const snapshot = await getDocs(classesQuery);
       return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
+      console.error("Error getting classes:", error);
       throw error;
     }
   },
@@ -245,6 +257,7 @@ export const firestoreService = {
         }
       }
     } catch (error) {
+      console.error("Error joining class:", error);
       throw error;
     }
   },
@@ -258,6 +271,7 @@ export const firestoreService = {
         timestamp: serverTimestamp()
       });
     } catch (error) {
+      console.error('Error adding food intake:', error);
       throw error;
     }
   },
@@ -275,6 +289,7 @@ export const firestoreService = {
       const snapshot = await getDocs(q);
       return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
+      console.error('Error getting trainee food intake:', error);
       throw error;
     }
   },
@@ -288,6 +303,7 @@ export const firestoreService = {
         timestamp: serverTimestamp()
       });
     } catch (error) {
+      console.error('Error adding workout log:', error);
       throw error;
     }
   },
@@ -305,6 +321,7 @@ export const firestoreService = {
       const snapshot = await getDocs(q);
       return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
+      console.error('Error getting trainee workout logs:', error);
       throw error;
     }
   },
@@ -325,6 +342,7 @@ export const firestoreService = {
         timestamp: serverTimestamp()
       });
     } catch (error) {
+      console.error('Error sending message:', error);
       throw error;
     }
   },
@@ -380,19 +398,20 @@ export const firestoreService = {
 
 // Storage Service
 export const storageService = {
-  uploadExerciseVideo: async (file, exerciseId) => {
+  uploadFile: async (file, path) => {
     try {
-      const fileRef = ref(storage, `exercises/${exerciseId}/${file.name}`);
-      const uploadTask = uploadBytesResumable(fileRef, file);
+      const storageRef = ref(storage, `${path}/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
       
       return new Promise((resolve, reject) => {
         uploadTask.on(
-          'state_changed',
+          "state_changed",
           (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload progress:', progress);
+            console.log(`Upload progress: ${progress}%`);
           },
           (error) => {
+            console.error("Upload error:", error);
             reject(error);
           },
           async () => {
@@ -402,10 +421,13 @@ export const storageService = {
         );
       });
     } catch (error) {
+      console.error("File upload error:", error);
       throw error;
     }
-  },
-  
+  }
+};
+
+export const uploadProfileImage = {
   uploadProfileImage: async (file, userId) => {
     try {
       const fileRef = ref(storage, `profiles/${userId}/${file.name}`);

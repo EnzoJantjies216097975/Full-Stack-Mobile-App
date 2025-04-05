@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Home, Users, Activity, Calendar, DumbBell, Logout } from 'lucide-react';
+import { Link, useLocation, Outlet } from 'react-router-dom';
+import { Home, Users, Activity, Calendar, Dumbbell, LogOut } from 'lucide-react';
 import useAuth from '../hooks/useAuth';
 
 const Layout = () => {

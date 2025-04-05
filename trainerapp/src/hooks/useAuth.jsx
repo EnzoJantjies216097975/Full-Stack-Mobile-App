@@ -49,7 +49,7 @@ const useAuth = create((set, get) => ({
       const idToken = await firebaseUser.getIdToken();
       
       // Authenticate with our backend
-      const response = await api.post('/auth/login', { idToken });
+      const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;
       
       // Save token to localStorage
@@ -75,7 +75,7 @@ const useAuth = create((set, get) => ({
   // Logout
   logout: async () => {
     try {
-      await firebaseAuth.logout();
+      // await firebaseAuth.logout();
       localStorage.removeItem('token');
       set({ 
         user: null, 

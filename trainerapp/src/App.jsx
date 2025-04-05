@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
@@ -7,7 +7,7 @@ import Exercises from './pages/Exercises';
 import Programs from './pages/Programs';
 import Classes from './pages/Classes';
 import Trainees from './pages/Trainees';
-import TraineeDetail from './pages/TraineeDetail'
+import TraineeDetail from './pages/TraineeDetail';
 import Login from './pages/Login';
 import useAuth from './hooks/useAuth';
 import ProgramCreator from './pages/ProgramCreator';

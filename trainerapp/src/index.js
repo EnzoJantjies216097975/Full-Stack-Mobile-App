@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './services/firebase';
+//import './services/firebase';
+
+// Add global API object to window for component access
+import api from './services/api';
+window.api = api;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

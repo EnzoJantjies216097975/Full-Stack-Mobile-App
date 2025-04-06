@@ -2,40 +2,19 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 
-// Define the shape of a notification
-interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  type?: 'workout' | 'class' | 'achievement' | 'generic';
-  timestamp: Date;
-  read: boolean;
-  referenceId?: string;
-}
-
-// Define the context type
-interface NotificationContextType {
-  notifications: Notification[];
-  unreadCount: number;
-  addNotification: (notification: Omit<Notification, 'id' | 'timestamp' | 'read'>) => void;
-  markAsRead: (id: string) => void;
-  markAllAsRead: () => void;
-  clearNotifications: () => void;
-}
-
-// Create the context
-const NotificationContext = createContext<NotificationContextType>({
+// Create the context with default values
+const NotificationContext = createContext({
   notifications: [],
   unreadCount: 0,
   addNotification: () => {},
   markAsRead: () => {},
   markAllAsRead: () => {},
-  clearNotifications: () => {},
+  clearNotifications: () => {}
 });
 
 // Provider component
-export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+export const NotificationProvider = ({ children }) => {
+  const [notifications, setNotifications] = useState([]);
 
   // Load notifications when component mounts
   useEffect(() => {
@@ -43,7 +22,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       try {
         const storedNotifications = await AsyncStorage.getItem('appNotifications');
         if (storedNotifications) {
-          const parsedNotifications = JSON.parse(storedNotifications).map((notification: any) => ({
+          const parsedNotifications = JSON.parse(storedNotifications).map((notification) => ({
             ...notification,
             timestamp: new Date(notification.timestamp)
           }));
@@ -61,7 +40,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const unreadCount = notifications.filter(n => !n.read).length;
 
   // Save notifications to storage
-  const saveNotificationsToStorage = async (updatedNotifications: Notification[]) => {
+  const saveNotificationsToStorage = async (updatedNotifications) => {
     try {
       await AsyncStorage.setItem(
         'appNotifications', 
@@ -73,8 +52,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   // Add a new notification
-  const addNotification = (newNotification: Omit<Notification, 'id' | 'timestamp' | 'read'>) => {
-    const notification: Notification = {
+  const addNotification = (newNotification) => {
+    const notification = {
       id: Date.now().toString(),
       ...newNotification,
       timestamp: new Date(),
@@ -87,7 +66,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   // Mark a specific notification as read
-  const markAsRead = (notificationId: string) => {
+  const markAsRead = (notificationId) => {
     const updatedNotifications = notifications.map(notification => 
       notification.id === notificationId 
         ? { ...notification, read: true } 
@@ -116,7 +95,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   // Context value
-  const contextValue: NotificationContextType = {
+  const contextValue = {
     notifications,
     unreadCount,
     addNotification,

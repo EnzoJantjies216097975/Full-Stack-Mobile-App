@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/screens/main/WorkoutSummaryScreen.js", "app/screens/main/WorkoutProgramsScreen.js", "app/screens/main/WorkoutInProgressScreen.js", "app/contexts/NotificationContext.js"  ]
+, "app/screens/main/WorkoutSummaryScreen.js", "app/screens/main/WorkoutProgramsScreen.js", "app/screens/main/WorkoutInProgressScreen.js", "app/contexts/NotificationContext.tsx, "app/contexts/AuthContext.js"", "app/DashboardScreen.js"  ]
 }

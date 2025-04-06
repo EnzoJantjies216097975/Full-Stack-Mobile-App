@@ -4,17 +4,18 @@ import { Stack } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 
-// Initialize Firebase
+// Initialize Firebase and AWS
 import { initializeFirebase } from './services/firebase';
-// import { configureAmplify } from '../services/aws';
+import { configureAmplify } from './services/aws';
 
 // Context Providers
 import { AuthProvider } from './contexts/AuthContext';
 import { WorkoutProvider } from './contexts/WorkoutContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 
-// Initialize Firebase and Amplify
+// Initialize services
 initializeFirebase();
-// configureAmplify();
+configureAmplify();
 
 export default function RootLayout() {
   return (
@@ -23,17 +24,19 @@ export default function RootLayout() {
       <PaperProvider>
         <AuthProvider>
           <WorkoutProvider>
-            <Stack
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: '#4F46E5',
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-              }}
-            />
+            <NotificationProvider>
+              <Stack
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: '#4F46E5',
+                  },
+                  headerTintColor: '#fff',
+                  headerTitleStyle: {
+                    fontWeight: 'bold',
+                  },
+                }}
+              />
+            </NotificationProvider>
           </WorkoutProvider>
         </AuthProvider>
       </PaperProvider>

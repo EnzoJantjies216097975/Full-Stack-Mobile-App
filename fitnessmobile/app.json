@@ -9,9 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+       "supportsTablet": true,
+      "bundleIdentifier": "com.yourdomain.fitnessmobile"
     },
     "android": {
+      "package": "com.yourdomain.fitnessmobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

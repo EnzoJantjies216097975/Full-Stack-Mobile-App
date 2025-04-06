@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 // Auth screens
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
-import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
+import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen.js';
 import ConfirmAccountScreen from '../screens/auth/ConfirmAccountScreen';
 import OnboardingScreen from '../screens/auth/OnboardingScreen';
 

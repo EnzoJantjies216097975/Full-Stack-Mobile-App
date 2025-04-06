@@ -1,0 +1,17 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+, "app/screens/main/WorkoutSummaryScreen.js", "app/screens/main/WorkoutProgramsScreen.js", "app/screens/main/WorkoutInProgressScreen.js", "app/contexts/NotificationContext.tsx, "app/contexts/AuthContext.js"", "app/DashboardScreen.js"  ]
+}

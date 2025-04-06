@@ -13,9 +13,9 @@ import { configureAmplify } from './services/aws';
 configureAmplify();
 
 // Context Providers
-import { AuthProvider } from './contexts/AuthContext';
-import { WorkoutProvider } from './contexts/WorkoutContext';
-import { NotificationProvider } from './contexts/NotificationContext';
+import { AuthProvider } from '../app/contexts/AuthContext';
+import { WorkoutProvider } from '../app/contexts/WorkoutContext';
+import { NotificationProvider } from '../app/contexts/NotificationContext';
 
 // Ignore specific warnings
 LogBox.ignoreLogs([

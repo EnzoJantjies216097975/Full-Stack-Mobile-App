@@ -12,7 +12,7 @@ import { Video } from 'expo-av';
 import { ProgressBar, Button } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useWorkout } from '../contexts/WorkoutContext';
+import { useWorkout } from '../app/contexts/WorkoutContext';
 
 export default function WorkoutInProgress() {
   const router = useRouter();

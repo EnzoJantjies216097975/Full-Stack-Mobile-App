@@ -167,7 +167,7 @@ export default function ClassDetail() {
       {/* Header Image */}
       <View style={styles.headerContainer}>
         <Image
-          source={require('../assets/class-yoga.jpg')}
+          source={require('../app/assets/class-yoga.jpg')}
           style={styles.headerImage}
           resizeMode="cover"
         />

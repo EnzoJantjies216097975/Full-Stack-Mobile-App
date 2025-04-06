@@ -2,9 +2,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 // Use correct relative path
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../app/contexts/AuthContext';
 // Other imports
-import { useWorkout } from '../contexts/WorkoutContext';
+import { useWorkout } from '../app/contexts/WorkoutContext';
 
 // Copy content from your DashboardScreen component
 const Dashboard = () => {

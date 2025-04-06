@@ -11,7 +11,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
-import { useNotifications } from '../contexts/NotificationContext';
+import { useNotifications } from '../app/contexts/NotificationContext';
 
 export default function NotificationsScreen() {
   const router = useRouter();

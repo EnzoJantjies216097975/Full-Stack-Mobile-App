@@ -12,8 +12,8 @@ import { Card, Title, Paragraph, Button, ProgressBar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '../../contexts/AuthContext';
-import { useWorkout } from '../../contexts/WorkoutContext';
+import { useAuth } from '../app/contexts/AuthContext';
+import { useWorkout } from '../app/contexts/WorkoutContext';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

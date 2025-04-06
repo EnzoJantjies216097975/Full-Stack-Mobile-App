@@ -167,10 +167,11 @@ export default function WorkoutDetail() {
                 params: { id: exercise.id }
               })}
             >
-              <Image 
-                source={{ uri: exercise.image }} 
-                style={styles.exerciseImage} 
-                <View style={styles.exerciseInfo}>
+               <Image 
+      source={{ uri: exercise.image }} 
+      style={styles.exerciseImage} 
+    />
+    <View style={styles.exerciseInfo}>
                 <Text style={styles.exerciseName}>{exercise.name}</Text>
                 <Text style={styles.exerciseDuration}>{exercise.duration}</Text>
                 <View style={styles.exerciseDetails}>
